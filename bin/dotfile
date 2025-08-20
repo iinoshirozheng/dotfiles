@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat <<'USAGE'
+dotfiles helper
+
+Usage:
+  dotfile link            # stow 主要套件
+  dotfile unlink          # 移除 symlink
+  dotfile restow          # 重新套用
+  dotfile update          # git pull + restow
+USAGE
+}
+
+root="${HOME}/dotfiles"
+
+cmd="${1:-help}"
+case "$cmd" in
+  link)
+    (cd "$root/stow" && stow --restow zsh starship git tmux wezterm eza nvim)
+    ;;
+  unlink)
+    (cd "$root/stow" && stow -D zsh starship git tmux wezterm eza nvim)
+    ;;
+  restow)
+    (cd "$root/stow" && stow --restow zsh starship git tmux wezterm eza nvim)
+    ;;
+  update)
+    (cd "$root" && git pull --rebase)
+    (cd "$root/stow" && stow --restow zsh starship git tmux wezterm eza nvim)
+    ;;
+  *)
+    usage ;;
+esac

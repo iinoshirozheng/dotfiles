@@ -1,0 +1,8 @@
+[user]
+    name = Your Name
+[includeIf "gitdir:~/work/"]
+    path = ~/.gitconfig.work
+[includeIf "onbranch:main"]
+    path = ~/.gitconfig.main
+[include]
+    path = ~/.gitconfig.local

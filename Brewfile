@@ -1,0 +1,10 @@
+# Homebrew package list
+brew "stow"
+brew "chezmoi"
+brew "git"
+brew "tmux"
+brew "wezterm"
+brew "eza"
+brew "fzf"
+brew "neovim"
+brew "starship"
