@@ -9,5 +9,20 @@ echo "Checking system health..."
 echo "Disk usage:"
 df -h
 
+echo ""
 echo "Memory usage:"
-free -h
+if command -v free >/dev/null; then
+  free -h
+else
+  # macOS: 使用 vm_stat 計算記憶體
+  page_size=$(pagesize)
+  mem_total=$(sysctl -n hw.memsize)
+  mem_total_gb=$(echo "scale=1; $mem_total / 1024 / 1024 / 1024" | bc)
+  
+  pages_free=$(vm_stat | awk '/Pages free/ {gsub(/\./,"",$3); print $3}')
+  pages_inactive=$(vm_stat | awk '/Pages inactive/ {gsub(/\./,"",$3); print $3}')
+  mem_free=$(echo "scale=1; ($pages_free + $pages_inactive) * $page_size / 1024 / 1024 / 1024" | bc)
+  mem_used=$(echo "scale=1; $mem_total_gb - $mem_free" | bc)
+  
+  printf "Total: %.1fG  Used: %.1fG  Free: %.1fG\n" "$mem_total_gb" "$mem_used" "$mem_free"
+fi
