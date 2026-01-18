@@ -6,10 +6,11 @@ usage() {
 dotfiles helper
 
 Usage:
-  dotfile link            # stow 主要套件
-  dotfile unlink          # 移除 symlink
-  dotfile restow          # 重新套用
-  dotfile update          # git pull + restow
+  dotfile install         # 安裝所有工具與設定 (自動偵測 OS)
+  dotfile link            # 連結設定檔 (stow)
+  dotfile unlink          # 移除設定檔連結
+  dotfile update          # 更新專案 (git pull + restow)
+  dotfile test            # 執行測試
 USAGE
 }
 
@@ -17,17 +18,16 @@ root="${HOME}/dotfiles"
 
 cmd="${1:-help}"
 case "$cmd" in
-  link)
+  link|restow)
+    echo "[Dotfile] Linking configurations..."
     (cd "$root/stow" && stow -t "$HOME" --restow zsh starship git eza nvim)
     ;;
   unlink)
+    echo "[Dotfile] Unlinking configurations..."
     (cd "$root/stow" && stow -t "$HOME" -D zsh starship git eza nvim)
     ;;
-  restow)
-    (cd "$root/stow" && stow -t "$HOME" --restow zsh starship git eza nvim)
-    ;;
   update)
-    echo "Updating dotfiles..."
+    echo "[Dotfile] Updating..."
     cd "$root"
     if ! git diff-index --quiet HEAD --; then
       echo "Stashing changes..."
@@ -39,8 +39,44 @@ case "$cmd" in
       echo "Restoring changes..."
       git stash pop
     fi
-    (cd "$root/stow" && stow -t "$HOME" --restow zsh starship git eza nvim)
+    "$0" link
     echo "Update complete!"
+    ;;
+  install)
+    OS="$(uname -s)"
+    echo "[Dotfile] Installing for $OS..."
+    
+    # 1. Fonts (Common)
+    if [ -f "$root/os/darwin/fonts/install.sh" ]; then
+        bash "$root/os/darwin/fonts/install.sh"
+    fi
+
+    if [ "$OS" = "Darwin" ]; then
+        # macOS Specific
+        echo "[Dotfile] Running brew bundle..."
+        (cd "$root" && brew bundle --file=./Brewfile)
+        
+        echo "[Dotfile] Applying macOS defaults..."
+        bash "$root/os/darwin/defaults/apply.sh"
+        
+        echo "[Dotfile] Configuring iTerm2..."
+        bash "$root/os/darwin/iterm2/configure.sh"
+    else
+        # Linux Specific
+        if [ -f "$root/os/linux/apt.txt" ]; then
+             echo "[Dotfile] Installing Apt packages..."
+             xargs -a "$root/os/linux/apt.txt" sudo apt install -y
+        fi
+        if [ -f "$root/os/linux/postinstall.sh" ]; then
+             bash "$root/os/linux/postinstall.sh"
+        fi
+    fi
+    
+    # Finally, link configs
+    "$0" link
+    ;;
+  test)
+    bash "$root/test/test_install.sh"
     ;;
   *)
     usage ;;

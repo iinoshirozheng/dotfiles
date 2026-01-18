@@ -13,7 +13,6 @@ brew "starship"
 brew "zoxide"
 brew "fzf"
 brew "tmux"
-brew "wezterm"
 cask "iterm2"
 
 # --- Modern CLI Tools ---

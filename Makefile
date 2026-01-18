@@ -1,55 +1,34 @@
 SHELL := /bin/bash
 
-.PHONY: bootstrap install link unlink mac linux test update lang-cpp lang-python fonts all
+.PHONY: bootstrap install link unlink mac linux test update fonts all
 
+# Entry point
 bootstrap:
 	./bootstrap.sh
 
+# Delegate everything to dotfile CLI
 install:
-	./install.sh $$(uname -s | tr '[:upper:]' '[:lower:]')
+	./bin/dotfile install
 
 link:
-	cd stow && stow -t ~ --restow zsh starship git eza nvim
+	./bin/dotfile link
 
 unlink:
-	cd stow && stow -t ~ -D zsh starship git eza nvim
+	./bin/dotfile unlink
 
 mac:
-	brew bundle --file=./Brewfile
-	bash ./os/darwin/defaults/apply.sh
-	bash ./os/darwin/iterm2/configure.sh
+	./bin/dotfile install
 
 linux:
-	bash ./os/linux/postinstall.sh
+	./bin/dotfile install
 
 update:
-	bash ./bin/dotfile update
+	./bin/dotfile update
 
 test:
-	bash ./test/test_install.sh
-
-lang-cpp:
-	@echo "[C++] Installing toolchain"
-	@if [ "$$(uname)" = "Darwin" ]; then \
-		xcode-select --install || true; \
-		brew install cmake ninja ccache pkg-config llvm vcpkg; \
-	else \
-		sudo apt update && sudo apt install -y build-essential clang cmake ninja-build ccache pkg-config git; \
-		if [ ! -d "$$HOME/vcpkg" ]; then git clone https://github.com/microsoft/vcpkg.git $$HOME/vcpkg && $$HOME/vcpkg/bootstrap-vcpkg.sh; fi; \
-	fi
-	cd stow && stow -t ~ --restow zsh
-
-lang-python:
-	@echo "[Python] Installing toolchain"
-	@if [ "$$(uname)" = "Darwin" ]; then \
-		brew install pyenv pipx uv || true; \
-	else \
-		command -v pyenv >/dev/null || curl https://pyenv.run | bash; \
-		python3 -m pip install --user pipx || true; \
-	fi
-	cd stow && stow -t ~ --restow zsh
+	./bin/dotfile test
 
 fonts:
-	bash ./os/darwin/fonts/install.sh || true
+	@echo "Fonts are now installed via 'make install' or 'dotfile install'"
 
 all: bootstrap install
