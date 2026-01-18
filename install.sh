@@ -16,4 +16,4 @@ elif [[ -f ./os/linux/apt.txt ]]; then
   xargs -a ./os/linux/apt.txt sudo apt install -y
 fi
 
-./bin/update.sh
+./bin/dotfile link

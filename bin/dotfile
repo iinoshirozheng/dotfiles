@@ -18,17 +18,17 @@ root="${HOME}/dotfiles"
 cmd="${1:-help}"
 case "$cmd" in
   link)
-    (cd "$root/stow" && stow --restow zsh starship git tmux wezterm eza nvim)
+    (cd "$root/stow" && stow -t "$HOME" --restow zsh starship git eza nvim)
     ;;
   unlink)
-    (cd "$root/stow" && stow -D zsh starship git tmux wezterm eza nvim)
+    (cd "$root/stow" && stow -t "$HOME" -D zsh starship git eza nvim)
     ;;
   restow)
-    (cd "$root/stow" && stow --restow zsh starship git tmux wezterm eza nvim)
+    (cd "$root/stow" && stow -t "$HOME" --restow zsh starship git eza nvim)
     ;;
   update)
     (cd "$root" && git pull --rebase)
-    (cd "$root/stow" && stow --restow zsh starship git tmux wezterm eza nvim)
+    (cd "$root/stow" && stow -t "$HOME" --restow zsh starship git eza nvim)
     ;;
   *)
     usage ;;

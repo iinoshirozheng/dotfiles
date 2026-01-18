@@ -9,10 +9,10 @@ install:
 	./install.sh $$(uname -s | tr '[:upper:]' '[:lower:]')
 
 link:
-	cd stow && stow --restow zsh starship git tmux wezterm eza nvim
+	cd stow && stow -t ~ --restow zsh starship git eza nvim
 
 unlink:
-	cd stow && stow -D zsh starship git tmux wezterm eza nvim
+	cd stow && stow -t ~ -D zsh starship git eza nvim
 
 mac:
 	brew bundle --file=./Brewfile
@@ -22,7 +22,7 @@ linux:
 	bash ./os/linux/postinstall.sh
 
 update:
-	bash ./scripts/update.sh
+	bash ./bin/dotfile update
 
 test:
 	bash ./test/test_install.sh
@@ -36,7 +36,7 @@ lang-cpp:
 		sudo apt update && sudo apt install -y build-essential clang cmake ninja-build ccache pkg-config git; \
 		if [ ! -d "$$HOME/vcpkg" ]; then git clone https://github.com/microsoft/vcpkg.git $$HOME/vcpkg && $$HOME/vcpkg/bootstrap-vcpkg.sh; fi; \
 	fi
-	cd stow && stow --restow zsh
+	cd stow && stow -t ~ --restow zsh
 
 lang-python:
 	@echo "[Python] Installing toolchain"
@@ -46,7 +46,7 @@ lang-python:
 		command -v pyenv >/dev/null || curl https://pyenv.run | bash; \
 		python3 -m pip install --user pipx || true; \
 	fi
-	cd stow && stow --restow zsh
+	cd stow && stow -t ~ --restow zsh
 
 fonts:
 	bash ./os/darwin/fonts/install.sh || true
