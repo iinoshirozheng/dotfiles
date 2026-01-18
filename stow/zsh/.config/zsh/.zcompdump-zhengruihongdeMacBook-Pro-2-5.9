@@ -1,4 +1,4 @@
-#files: 969	version: 5.9
+#files: 992	version: 5.9
 
 _comps=(
 '-' '_precommand'
@@ -177,6 +177,7 @@ _comps=(
 'basename' '_basename'
 'basenc' '_basenc'
 'bash' '_bash'
+'bat' '_bat'
 'batch' '_at'
 'baz' '_baz'
 'beadm' '_beadm'
@@ -233,6 +234,7 @@ _comps=(
 'caffeinate' '_caffeinate'
 'cal' '_cal'
 'calendar' '_calendar'
+'cargo' '_cargo'
 'cat' '_cat'
 'catchsegv' '_precommand'
 'cc' '_gcc'
@@ -251,6 +253,7 @@ _comps=(
 'chattr' '_chattr'
 'chcon' '_chcon'
 'chdir' '_cd'
+'chezmoi' '_chezmoi'
 'chflags' '_chflags'
 'chfn' '_users'
 'chgrp' '_chown'
@@ -359,7 +362,7 @@ _comps=(
 'debuild' '_debuild'
 'declare' '_typeset'
 'defaults' '_defaults'
-'delta' '_sccs'
+'delta' '_delta'
 'designate' '_openstack'
 'devtodo' '_devtodo'
 'df' '_df'
@@ -466,11 +469,13 @@ _comps=(
 'express' '_webbrowser'
 'extcheck' '_java'
 'extractres' '_psutils'
+'eza' '_eza'
 'fakeroot' '_fakeroot'
 'false' '_nothing'
 'fc' '_fc'
 'fc-list' '_xft_fonts'
 'fc-match' '_xft_fonts'
+'fd' '_fd'
 'feh' '_feh'
 'fetch' '_fetch'
 'fetchmail' '_fetchmail'
@@ -579,6 +584,7 @@ _comps=(
 'ggetopt' '_getopt'
 'ggrep' '_grep'
 'ggv' '_gnome-gv'
+'gh' '_gh'
 'ghead' '_head'
 'ghostscript' '_ghostscript'
 'ghostview' '_pspdf'
@@ -586,11 +592,7 @@ _comps=(
 'ginstall' '_install'
 'git' '_git'
 'git-buildpackage' '_git-buildpackage'
-'git-cvsserver' '_git'
-'git-receive-pack' '_git'
-'git-shell' '_git'
-'git-upload-archive' '_git'
-'git-upload-pack' '_git'
+'git-lfs' '_git-lfs'
 'gitk' '_git'
 'gjoin' '_join'
 'glance' '_openstack'
@@ -786,6 +788,7 @@ _comps=(
 'isag' '_sysstat'
 'ispell' '_ispell'
 'iwconfig' '_iwconfig'
+'j' '_j'
 'jadetex' '_tex'
 'jail' '_jail'
 'jar' '_java'
@@ -1033,7 +1036,6 @@ _comps=(
 'noglob' '_precommand'
 'nohup' '_precommand'
 'nova' '_openstack'
-'npm' '_npm'
 'ns' '_hosts'
 'nsenter' '_nsenter'
 'nslookup' '_nslookup'
@@ -1063,6 +1065,7 @@ _comps=(
 'osascript' '_osascript'
 'osc' '_osc'
 'otool' '_otool'
+'p11-kit' '_p11-kit'
 'p4' '_perforce'
 'p4d' '_perforce'
 'pack' '_pack'
@@ -1121,6 +1124,7 @@ _comps=(
 'ping' '_ping'
 'ping6' '_ping'
 'piuparts' '_piuparts'
+'pixi' '_pixi'
 'pkg' '_pkg5'
 'pkg-config' '_pkg-config'
 'pkg_add' '_bsd_pkg'
@@ -1148,6 +1152,7 @@ _comps=(
 'pmpath' '_perl_modules'
 'pmvers' '_perl_modules'
 'podgrep' '_perl_modules'
+'podman' '_podman'
 'podpath' '_perl_modules'
 'podtoc' '_perl_modules'
 'poff' '_pon'
@@ -1248,6 +1253,7 @@ _comps=(
 'reprepro' '_reprepro'
 'restart' '_initctl'
 'retawq' '_webbrowser'
+'rg' '_rg'
 'rgrep' '_grep'
 'rgview' '_vim'
 'rgvim' '_vim'
@@ -1387,6 +1393,7 @@ _comps=(
 'ssh-keyscan' '_ssh'
 'sshfs' '_sshfs'
 'star' '_tar'
+'starship' '_starship'
 'start' '_initctl'
 'stat' '_stat'
 'status' '_initctl'
@@ -1406,6 +1413,7 @@ _comps=(
 'sudo' '_sudo'
 'sudoedit' '_sudo'
 'sum' '_cksum'
+'supabase' '_supabase'
 'surfraw' '_surfraw'
 'sv' '_runit'
 'svcadm' '_svcadm'
@@ -1455,7 +1463,6 @@ _comps=(
 'texindex' '_texinfo'
 'tg' '_topgit'
 'tidy' '_tidy'
-'tig' '_git'
 'time' '_precommand'
 'timeout' '_timeout'
 'times' '_nothing'
@@ -1491,6 +1498,7 @@ _comps=(
 'true' '_nothing'
 'truncate' '_truncate'
 'truss' '_truss'
+'trust' '_trust'
 'tryaffix' '_ispell'
 'tty' '_tty'
 'ttyctl' '_ttyctl'
@@ -1556,6 +1564,8 @@ _comps=(
 'useradd' '_user_admin'
 'userdel' '_users'
 'usermod' '_user_admin'
+'uv' '_uv'
+'uvx' '_uvx'
 'vacuumdb' '_postgresql'
 'val' '_sccs'
 'valgrind' '_valgrind'
@@ -1713,6 +1723,7 @@ _comps=(
 'zmv' '_zmv'
 'zone' '_hosts'
 'zoneadm' '_zoneadm'
+'zoxide' '_zoxide'
 'zparseopts' '_zparseopts'
 'zpool' '_zfs'
 'zpty' '_zpty'
@@ -1841,113 +1852,117 @@ bindkey '^[,' _history-complete-newer
 bindkey '^[/' _history-complete-older
 bindkey '^[~' _bash_complete-word
 
-autoload -Uz _docker-compose _docker _brew _SUSEconfig __arguments \
-            _a2ps _a2utils _aap _abcde _absolute_command_paths \
-            _ack _acpi _acpitool _acroread _adb \
-            _add-zle-hook-widget _add-zsh-hook _alias _aliases _all_labels \
-            _all_matches _alsa-utils _alternative _analyseplugin _ansible \
-            _ant _antiword _apachectl _apm _approximate \
-            _apt _apt-file _apt-move _apt-show-versions _aptitude \
-            _arch_archives _arch_namespace _arg_compile _arguments _arp \
-            _arping _arrays _asciidoctor _asciinema _assign \
-            _at _attr _augeas _auto-apt _autocd \
-            _avahi _awk _axi-cache _base64 _basename \
-            _basenc _bash _bash_completions _baudrates _baz \
-            _be_name _beadm _beep _bibtex _bind_addresses \
-            _bindkey _bison _bittorrent _bogofilter _bpf_filters \
-            _bpython _brace_parameter _brctl _bsd_disks _bsd_pkg \
-            _bsdconfig _bsdinstall _btrfs _bts _bug \
-            _builtin _bzip2 _bzr _cabal _cache_invalid \
-            _caffeinate _cal _calendar _call_function _canonical_paths \
-            _capabilities _cat _ccal _cd _cdbs-edit-patch \
-            _cdcd _cdr _cdrdao _cdrecord _chattr \
-            _chcon _chflags _chkconfig _chmod _choom \
-            _chown _chroot _chrt _chsh _cksum \
-            _clay _cmdambivalent _cmdstring _cmp _code \
-            _column _combination _comm _command _command_names \
-            _comp_locale _compadd _compdef _complete _complete_debug \
-            _complete_help _complete_help_generic _complete_tag _completers _composer \
-            _compress _condition _configure _coreadm _correct \
-            _correct_filename _correct_word _cowsay _cp _cpio \
-            _cplay _cpupower _crontab _cryptsetup _cscope \
-            _csplit _cssh _csup _ctags _ctags_tags \
-            _cu _curl _cut _cvs _cvsup \
-            _cygcheck _cygpath _cygrunsrv _cygserver _cygstart \
-            _dak _darcs _date _date_formats _dates \
-            _dbus _dchroot _dchroot-dsa _dconf _dcop \
-            _dcut _dd _deb_architectures _deb_codenames _deb_files \
-            _deb_packages _debbugs_bugnumber _debchange _debcheckout _debdiff \
-            _debfoster _deborphan _debsign _debsnap _debuild \
-            _default _defaults _delimiters _describe _description \
-            _devtodo _df _dhclient _dhcpinfo _dict \
-            _dict_words _diff _diff3 _diff_options _diffstat \
-            _dig _dir_list _directories _directory_stack _dirs \
-            _disable _dispatch _django _dkms _dladm \
-            _dlocate _dmesg _dmidecode _dnf _dns_types \
-            _doas _domains _dos2unix _dpatch-edit-patch _dpkg \
-            _dpkg-buildpackage _dpkg-cross _dpkg-repack _dpkg_source _dput \
-            _drill _dropbox _dscverify _dsh _dtrace \
-            _dtruss _du _dumpadm _dumper _dupload \
-            _dvi _dynamic_directory_name _e2label _ecasound _echotc \
-            _echoti _ed _elfdump _elinks _email_addresses \
-            _emulate _enable _enscript _entr _env \
-            _eog _equal _espeak _etags _ethtool \
-            _evince _exec _expand _expand_alias _expand_word \
-            _extensions _external_pwds _fakeroot _fbsd_architectures _fbsd_device_types \
-            _fc _feh _fetch _fetchmail _ffmpeg \
-            _figlet _file_descriptors _file_flags _file_modes _file_systems \
-            _files _find _find_net_interfaces _findmnt _finger \
-            _fink _first _flac _flex _floppy \
-            _flowadm _fmadm _fmt _fold _fortune \
-            _free _freebsd-update _fs_usage _fsh _fstat \
-            _functions _fuse_arguments _fuse_values _fuser _fusermount \
-            _fw_update _gcc _gcore _gdb _geany \
-            _gem _generic _genisoimage _getclip _getconf \
-            _getent _getfacl _getmail _getopt _ghostscript \
-            _git _git-buildpackage _global _global_tags _globflags \
-            _globqual_delims _globquals _gnome-gv _gnu_generic _gnupod \
-            _gnutls _go _gpasswd _gpg _gphoto2 \
-            _gprof _gqview _gradle _graphicsmagick _grep \
-            _grep-excuses _groff _groups _growisofs _gsettings \
-            _gstat _guard _guilt _gv _gzip \
-            _hash _have_glob_qual _hdiutil _head _hexdump \
-            _history _history_complete_word _history_modifiers _host _hostname \
-            _hosts _htop _hwinfo _iconv _iconvconfig \
-            _id _ifconfig _iftop _ignored _imagemagick \
-            _in_vared _inetadm _init_d _initctl _install \
-            _invoke-rc.d _ionice _iostat _ip _ipadm \
-            _ipfw _ipsec _ipset _iptables _irssi \
-            _ispell _iwconfig _jail _jails _java \
-            _java_class _jexec _jls _jobs _jobs_bg \
-            _jobs_builtin _jobs_fg _joe _join _jot \
-            _jq _kdeconnect _kdump _kfmclient _kill \
-            _killall _kld _knock _kpartx _ktrace \
-            _ktrace_points _kvno _last _ld_debug _ldap \
-            _ldconfig _ldd _less _lha _libvirt \
-            _lighttpd _limit _limits _links _lintian \
-            _list _list_files _lldb _ln _loadkeys \
-            _locale _localedef _locales _locate _logger \
-            _logical_volumes _login_classes _look _losetup _lp \
-            _ls _lsattr _lsblk _lscfg _lsdev \
-            _lslv _lsns _lsof _lspv _lsusb \
-            _lsvg _ltrace _lua _luarocks _lynx \
-            _lz4 _lzop _mac_applications _mac_files_for_application _madison \
-            _mail _mailboxes _main_complete _make _make-kpkg \
-            _man _mat _mat2 _match _math \
-            _math_params _matlab _md5sum _mdadm _mdfind \
-            _mdls _mdutil _members _mencal _menu \
-            _mere _mergechanges _message _mh _mii-tool \
-            _mime_types _mixerctl _mkdir _mkfifo _mknod \
-            _mkshortcut _mktemp _mkzsh _module _module-assistant \
-            _module_math_func _modutils _mondo _monotone _moosic \
-            _mosh _most_recent_file _mount _mozilla _mpc \
-            _mplayer _mt _mtools _mtr _multi_parts \
-            _mupdf _mutt _mv _my_accounts _myrepos \
-            _mysql_utils _mysqldiff _nautilus _nbsd_architectures _ncftp \
-            _nedit _net_interfaces _netcat _netscape _netstat \
-            _networkmanager _networksetup _newsgroups _next_label _next_tags \
-            _nginx _ngrep _nice _nkf _nl \
-            _nm _nmap _normal _nothing _npm \
+autoload -Uz _docker-compose _docker _bat _brew _cargo \
+            _chezmoi _delta _eza _fd _gh \
+            _git _git-lfs _j _p11-kit _pixi \
+            _podman _rg _starship _supabase _trust \
+            _uv _uvx _zoxide _brew _SUSEconfig \
+            __arguments _a2ps _a2utils _aap _abcde \
+            _absolute_command_paths _ack _acpi _acpitool _acroread \
+            _adb _add-zle-hook-widget _add-zsh-hook _alias _aliases \
+            _all_labels _all_matches _alsa-utils _alternative _analyseplugin \
+            _ansible _ant _antiword _apachectl _apm \
+            _approximate _apt _apt-file _apt-move _apt-show-versions \
+            _aptitude _arch_archives _arch_namespace _arg_compile _arguments \
+            _arp _arping _arrays _asciidoctor _asciinema \
+            _assign _at _attr _augeas _auto-apt \
+            _autocd _avahi _awk _axi-cache _base64 \
+            _basename _basenc _bash _bash_completions _baudrates \
+            _baz _be_name _beadm _beep _bibtex \
+            _bind_addresses _bindkey _bison _bittorrent _bogofilter \
+            _bpf_filters _bpython _brace_parameter _brctl _bsd_disks \
+            _bsd_pkg _bsdconfig _bsdinstall _btrfs _bts \
+            _bug _builtin _bzip2 _bzr _cabal \
+            _cache_invalid _caffeinate _cal _calendar _call_function \
+            _canonical_paths _capabilities _cat _ccal _cd \
+            _cdbs-edit-patch _cdcd _cdr _cdrdao _cdrecord \
+            _chattr _chcon _chflags _chkconfig _chmod \
+            _choom _chown _chroot _chrt _chsh \
+            _cksum _clay _cmdambivalent _cmdstring _cmp \
+            _code _column _combination _comm _command \
+            _command_names _comp_locale _compadd _compdef _complete \
+            _complete_debug _complete_help _complete_help_generic _complete_tag _completers \
+            _composer _compress _condition _configure _coreadm \
+            _correct _correct_filename _correct_word _cowsay _cp \
+            _cpio _cplay _cpupower _crontab _cryptsetup \
+            _cscope _csplit _cssh _csup _ctags \
+            _ctags_tags _cu _curl _cut _cvs \
+            _cvsup _cygcheck _cygpath _cygrunsrv _cygserver \
+            _cygstart _dak _darcs _date _date_formats \
+            _dates _dbus _dchroot _dchroot-dsa _dconf \
+            _dcop _dcut _dd _deb_architectures _deb_codenames \
+            _deb_files _deb_packages _debbugs_bugnumber _debchange _debcheckout \
+            _debdiff _debfoster _deborphan _debsign _debsnap \
+            _debuild _default _defaults _delimiters _describe \
+            _description _devtodo _df _dhclient _dhcpinfo \
+            _dict _dict_words _diff _diff3 _diff_options \
+            _diffstat _dig _dir_list _directories _directory_stack \
+            _dirs _disable _dispatch _django _dkms \
+            _dladm _dlocate _dmesg _dmidecode _dnf \
+            _dns_types _doas _domains _dos2unix _dpatch-edit-patch \
+            _dpkg _dpkg-buildpackage _dpkg-cross _dpkg-repack _dpkg_source \
+            _dput _drill _dropbox _dscverify _dsh \
+            _dtrace _dtruss _du _dumpadm _dumper \
+            _dupload _dvi _dynamic_directory_name _e2label _ecasound \
+            _echotc _echoti _ed _elfdump _elinks \
+            _email_addresses _emulate _enable _enscript _entr \
+            _env _eog _equal _espeak _etags \
+            _ethtool _evince _exec _expand _expand_alias \
+            _expand_word _extensions _external_pwds _fakeroot _fbsd_architectures \
+            _fbsd_device_types _fc _feh _fetch _fetchmail \
+            _ffmpeg _figlet _file_descriptors _file_flags _file_modes \
+            _file_systems _files _find _find_net_interfaces _findmnt \
+            _finger _fink _first _flac _flex \
+            _floppy _flowadm _fmadm _fmt _fold \
+            _fortune _free _freebsd-update _fs_usage _fsh \
+            _fstat _functions _fuse_arguments _fuse_values _fuser \
+            _fusermount _fw_update _gcc _gcore _gdb \
+            _geany _gem _generic _genisoimage _getclip \
+            _getconf _getent _getfacl _getmail _getopt \
+            _ghostscript _git _git-buildpackage _global _global_tags \
+            _globflags _globqual_delims _globquals _gnome-gv _gnu_generic \
+            _gnupod _gnutls _go _gpasswd _gpg \
+            _gphoto2 _gprof _gqview _gradle _graphicsmagick \
+            _grep _grep-excuses _groff _groups _growisofs \
+            _gsettings _gstat _guard _guilt _gv \
+            _gzip _hash _have_glob_qual _hdiutil _head \
+            _hexdump _history _history_complete_word _history_modifiers _host \
+            _hostname _hosts _htop _hwinfo _iconv \
+            _iconvconfig _id _ifconfig _iftop _ignored \
+            _imagemagick _in_vared _inetadm _init_d _initctl \
+            _install _invoke-rc.d _ionice _iostat _ip \
+            _ipadm _ipfw _ipsec _ipset _iptables \
+            _irssi _ispell _iwconfig _jail _jails \
+            _java _java_class _jexec _jls _jobs \
+            _jobs_bg _jobs_builtin _jobs_fg _joe _join \
+            _jot _jq _kdeconnect _kdump _kfmclient \
+            _kill _killall _kld _knock _kpartx \
+            _ktrace _ktrace_points _kvno _last _ld_debug \
+            _ldap _ldconfig _ldd _less _lha \
+            _libvirt _lighttpd _limit _limits _links \
+            _lintian _list _list_files _lldb _ln \
+            _loadkeys _locale _localedef _locales _locate \
+            _logger _logical_volumes _login_classes _look _losetup \
+            _lp _ls _lsattr _lsblk _lscfg \
+            _lsdev _lslv _lsns _lsof _lspv \
+            _lsusb _lsvg _ltrace _lua _luarocks \
+            _lynx _lz4 _lzop _mac_applications _mac_files_for_application \
+            _madison _mail _mailboxes _main_complete _make \
+            _make-kpkg _man _mat _mat2 _match \
+            _math _math_params _matlab _md5sum _mdadm \
+            _mdfind _mdls _mdutil _members _mencal \
+            _menu _mere _mergechanges _message _mh \
+            _mii-tool _mime_types _mixerctl _mkdir _mkfifo \
+            _mknod _mkshortcut _mktemp _mkzsh _module \
+            _module-assistant _module_math_func _modutils _mondo _monotone \
+            _moosic _mosh _most_recent_file _mount _mozilla \
+            _mpc _mplayer _mt _mtools _mtr \
+            _multi_parts _mupdf _mutt _mv _my_accounts \
+            _myrepos _mysql_utils _mysqldiff _nautilus _nbsd_architectures \
+            _ncftp _nedit _net_interfaces _netcat _netscape \
+            _netstat _networkmanager _networksetup _newsgroups _next_label \
+            _next_tags _nginx _ngrep _nice _nkf \
+            _nl _nm _nmap _normal _nothing \
             _nsenter _nslookup _numbers _numfmt _nvram \
             _objdump _object_classes _object_files _obsd_architectures _od \
             _okular _oldlist _open _openstack _opkg \
@@ -2041,4 +2056,4 @@ typeset -gUa _comp_assocs
 _comp_assocs=( '' )
 
 #omz revision: 35068db8373917a23eb9e3dabeb6596348e6534c
-#omz fpath: /Users/ray/.oh-my-zsh/plugins/docker-compose /Users/ray/.oh-my-zsh/plugins/docker /Users/ray/.oh-my-zsh/custom/plugins/git-open /Users/ray/.oh-my-zsh/plugins/sudo /Users/ray/.oh-my-zsh/plugins/fzf /Users/ray/.oh-my-zsh/plugins/zoxide /Users/ray/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting /Users/ray/.oh-my-zsh/custom/plugins/zsh-autosuggestions /Users/ray/.oh-my-zsh/plugins/git /Users/ray/.oh-my-zsh/functions /Users/ray/.oh-my-zsh/completions /Users/ray/.oh-my-zsh/custom/functions /Users/ray/.oh-my-zsh/custom/completions /Users/ray/.oh-my-zsh/cache/completions /usr/local/share/zsh/site-functions /usr/share/zsh/site-functions /usr/share/zsh/5.9/functions
+#omz fpath: /Users/ray/.oh-my-zsh/plugins/docker-compose /Users/ray/.oh-my-zsh/plugins/docker /Users/ray/.oh-my-zsh/custom/plugins/git-open /Users/ray/.oh-my-zsh/plugins/sudo /Users/ray/.oh-my-zsh/plugins/fzf /Users/ray/.oh-my-zsh/plugins/zoxide /Users/ray/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting /Users/ray/.oh-my-zsh/custom/plugins/zsh-autosuggestions /Users/ray/.oh-my-zsh/plugins/git /Users/ray/.oh-my-zsh/functions /Users/ray/.oh-my-zsh/completions /Users/ray/.oh-my-zsh/custom/functions /Users/ray/.oh-my-zsh/custom/completions /Users/ray/.oh-my-zsh/cache/completions /opt/homebrew/share/zsh/site-functions /usr/local/share/zsh/site-functions /usr/share/zsh/site-functions /usr/share/zsh/5.9/functions

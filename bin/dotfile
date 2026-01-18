@@ -20,11 +20,11 @@ cmd="${1:-help}"
 case "$cmd" in
   link|restow)
     echo "[Dotfile] Linking configurations..."
-    (cd "$root/stow" && stow -t "$HOME" --restow zsh starship git eza nvim)
+    (cd "$root/stow" && stow -t "$HOME" --restow zsh starship git eza nvim iterm2)
     ;;
   unlink)
     echo "[Dotfile] Unlinking configurations..."
-    (cd "$root/stow" && stow -t "$HOME" -D zsh starship git eza nvim)
+    (cd "$root/stow" && stow -t "$HOME" -D zsh starship git eza nvim iterm2)
     ;;
   update)
     echo "[Dotfile] Updating..."
