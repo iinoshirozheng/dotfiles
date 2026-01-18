@@ -27,3 +27,7 @@ fi
 if command -v bat >/dev/null; then
   export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 fi
+
+# --- Editor ---
+export EDITOR='nvim'
+export VISUAL='nvim'

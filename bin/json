@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+if [ -n "$1" ] && [ -f "$1" ]; then
+    python3 -m json.tool "$1"
+elif [ ! -t 0 ]; then
+    python3 -m json.tool
+else
+    echo "Usage: json <file> OR cat file.json | json"
+    exit 1
+fi

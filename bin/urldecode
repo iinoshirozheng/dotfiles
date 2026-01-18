@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+if [ -t 0 ] && [ -z "$1" ]; then
+    echo "Usage: urldecode <string> OR echo <string> | urldecode"
+    exit 1
+fi
+
+if [ -z "$1" ]; then
+    # Read from basic stdin
+    python3 -c "import sys, urllib.parse; print(urllib.parse.unquote(sys.stdin.read().strip()))"
+else
+    # Read from argument
+    python3 -c "import sys, urllib.parse; print(urllib.parse.unquote(sys.argv[1]))" "$1"
+fi

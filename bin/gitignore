@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+if [ -z "$1" ]; then
+    echo "Usage: gitignore <types>"
+    echo "Example: gitignore python,macos"
+    exit 1
+fi
+curl -sL https://www.gitignore.io/api/"$@"

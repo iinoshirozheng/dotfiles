@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+if [ -z "$1" ]; then
+  echo "Usage: cht <query>"
+  echo "Example: cht python read file"
+  echo "Example: cht tar"
+  exit 1
+fi
+
+query="$*"
+query="${query// /+}"
+
+curl -s "cht.sh/$query" | less -R

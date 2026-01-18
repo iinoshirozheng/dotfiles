@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Exclude heavy directories to prevent freezing
+IGN_DIRS=(-name "node_modules" -o -name ".git" -o -name ".venv" -o -name "env" -o -name ".idea" -o -name ".tox")
+
+# Find and delete
+find . \( "${IGN_DIRS[@]}" \) -prune -o -name "*.pyc" -print0 | xargs -0 rm -f
+find . \( "${IGN_DIRS[@]}" \) -prune -o -name "*.pyo" -print0 | xargs -0 rm -f
+find . \( "${IGN_DIRS[@]}" \) -prune -o -name "__pycache__" -print0 | xargs -0 rm -rf
+find . \( "${IGN_DIRS[@]}" \) -prune -o -name ".pytest_cache" -print0 | xargs -0 rm -rf
+find . \( "${IGN_DIRS[@]}" \) -prune -o -name ".mypy_cache" -print0 | xargs -0 rm -rf
+find . \( "${IGN_DIRS[@]}" \) -prune -o -name ".ipynb_checkpoints" -print0 | xargs -0 rm -rf
+
+echo "Python cache cleaned."
