@@ -21,3 +21,9 @@ if [ -d "$HOME/development/cproject/vcpkg" ]; then
   export VCPKG_ROOT="$HOME/development/cproject/vcpkg"
   export PATH="$VCPKG_ROOT:$PATH"
 fi
+
+# --- Man Pager ---
+# Use bat as manpager for syntax highlighting
+if command -v bat >/dev/null; then
+  export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+fi

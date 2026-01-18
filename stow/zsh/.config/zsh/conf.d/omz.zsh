@@ -30,6 +30,17 @@ fi
 # 載入 fzf 的按鍵綁定與自動補全
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# --- FZF & FD Integration ---
+# 使用 fd 取代預設的 find，尊重 .gitignore
+export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+# --- Zoxide ---
+# 初始化 zoxide
+if command -v zoxide >/dev/null; then
+  eval "$(zoxide init zsh)"
+fi
+
 # 載入 starship (Prompt)
 if command -v starship >/dev/null; then
   eval "$(starship init zsh)"

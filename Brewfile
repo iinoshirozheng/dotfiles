@@ -30,8 +30,9 @@ brew "neovim"
 brew "gh"           # GitHub CLI
 brew "node"
 brew "rust"
-brew "python@3.11"  # Stable Python
-brew "supabase/tap/supabase"
+brew "python"       # Latest Stable Python
+brew "uv"           # Fast Python installer
+brew "pixi"         # Package management made easy
 
 # --- AI & Data ---
 brew "ollama"
