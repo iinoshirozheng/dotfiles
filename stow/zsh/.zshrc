@@ -60,6 +60,7 @@ eval "$(starship init zsh)"
 
 # --- cproject Environment ---
 export PATH="/Users/ray/development/cproject/bin:$PATH"
+export PATH="$HOME/dotfiles/bin:$PATH"
 export VCPKG_ROOT="/Users/ray/development/cproject/vcpkg"
 export PATH="$VCPKG_ROOT:$PATH"
 
