@@ -1,8 +1,12 @@
 [user]
-    name = Your Name
-[includeIf "gitdir:~/work/"]
-    path = ~/.gitconfig.work
-[includeIf "onbranch:main"]
-    path = ~/.gitconfig.main
-[include]
-    path = ~/.gitconfig.local
+	name = Ray
+	email = iinoshirozheng@gmail.com
+[credential]
+	helper = osxkeychain
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+[core]
+	fsmonitor = false

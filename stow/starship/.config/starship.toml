@@ -61,6 +61,12 @@ Debian = "󰣚"
 Redhat = "󱄛"
 RedHatEnterprise = "󱄛"
 
+[username]
+show_always = true
+style_user = "bg:surface0 fg:text"
+style_root = "bg:surface0 fg:text"
+format = '[ $user ]($style)'
+
 [directory]
 style = "sapphire"
 format = "[ $path ]($style)"
@@ -76,6 +82,7 @@ format = "[ $path ]($style)"
 
 [os]
 disabled = true
+
 
 [git_branch]
 symbol = "[](black) "

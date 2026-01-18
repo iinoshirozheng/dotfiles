@@ -27,8 +27,20 @@ case "$cmd" in
     (cd "$root/stow" && stow -t "$HOME" --restow zsh starship git eza nvim)
     ;;
   update)
-    (cd "$root" && git pull --rebase)
+    echo "Updating dotfiles..."
+    cd "$root"
+    if ! git diff-index --quiet HEAD --; then
+      echo "Stashing changes..."
+      git stash
+      STASHED=1
+    fi
+    git pull --rebase
+    if [ "${STASHED:-0}" -eq 1 ]; then
+      echo "Restoring changes..."
+      git stash pop
+    fi
     (cd "$root/stow" && stow -t "$HOME" --restow zsh starship git eza nvim)
+    echo "Update complete!"
     ;;
   *)
     usage ;;
