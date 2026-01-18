@@ -17,6 +17,7 @@ unlink:
 mac:
 	brew bundle --file=./Brewfile
 	bash ./os/darwin/defaults/apply.sh
+	bash ./os/darwin/iterm2/configure.sh
 
 linux:
 	bash ./os/linux/postinstall.sh
