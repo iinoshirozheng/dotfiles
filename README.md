@@ -67,6 +67,20 @@ nvim
 - `ga`, `gc`, `gp`, `gl`: Git 常用操作
 - `vi`, `vim` -> `nvim`
 
+### Ripgrep (增強顏色搜尋)
+
+| Alias | 說明 |
+| :--- | :--- |
+| `rgg` | 增強版搜尋 (支援 pipeline) |
+| `rgf` | 搜尋檔名 |
+| `rgi` | 不區分大小寫 |
+| `rgh` | 包含隱藏檔案 |
+| `rga` | 搜尋所有檔案 (含 gitignore) |
+| `rgt` | 搜尋指定類型 (e.g. `rgt py "pattern"`) |
+| `rgtls` | 列出所有支援類型 |
+| `rgc` | 顯示上下文 3 行 |
+| `rge` | 搜尋指定副檔名 (e.g. `rge "*.tsx" "pattern"`) |
+
 ## 授權
 
 MIT License
