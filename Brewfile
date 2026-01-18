@@ -18,6 +18,7 @@ cask "iterm2"
 # --- Modern CLI Tools ---
 brew "eza"          # Modern ls
 brew "ripgrep"      # Fast grep
+brew "git-delta"    # Better git diff (Recommended)
 brew "bat"          # Modern cat with syntax highlighting (Recommended)
 brew "fd"           # Fast find (Recommended)
 brew "jq"           # JSON processor (Recommended)

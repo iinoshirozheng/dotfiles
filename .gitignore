@@ -1,0 +1,29 @@
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a home directory
+.zsh_history
+.bash_history
+.lesshst
+.wget-hsts
+.python_history
+
+# Editor config
+.vscode/
+
+# Project specific
+stow/*/LICENSE
+stow/*/.DS_Store
+
+# Temporary backups
+*.bak
+*.swp
+*~

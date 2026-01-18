@@ -1,12 +1,57 @@
 [user]
 	name = Ray
 	email = iinoshirozheng@gmail.com
+
 [credential]
 	helper = osxkeychain
+
+# --- Aliases ---
+[alias]
+    s = status
+    c = commit
+    a = add
+    co = checkout
+    br = branch
+    df = diff
+    dfc = diff --cached
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    st = status -sb
+    unstage = reset HEAD --
+    last = log -1 HEAD
+
+# --- Core Settings ---
+[core]
+	fsmonitor = false
+    pager = delta
+    editor = nvim
+    ignorecase = false
+
+[init]
+    defaultBranch = main
+
+[pull]
+    rebase = true
+
+[push]
+    autoSetupRemote = true
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true    # use n and N to move between diff sections
+    light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+    line-numbers = true
+    side-by-side = false # set to true if you like side-by-side diffs
+
+[merge]
+    conflictstyle = diff3
+
+[diff]
+    colorMoved = default
+
 [filter "lfs"]
 	process = git-lfs filter-process
 	required = true
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
-[core]
-	fsmonitor = false
