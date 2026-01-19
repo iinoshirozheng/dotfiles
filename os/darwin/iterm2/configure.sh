@@ -21,12 +21,8 @@ if [ -f "$COLOR_PRESET" ]; then
     open "$COLOR_PRESET" || true
 fi
 
-# 4.設定 Dynamic Profiles (自動載入設定檔)
-DYNAMIC_PROFILE_DIR="$HOME/Library/Application Support/iTerm2/DynamicProfiles"
-mkdir -p "$DYNAMIC_PROFILE_DIR"
-if [ -f "$ITERM_PREFS_DIR/Profiles.json" ]; then
-    echo "[iTerm2] Linking Dynamic Profile..."
-    ln -sf "$ITERM_PREFS_DIR/Profiles.json" "$DYNAMIC_PROFILE_DIR/dotfiles_profiles.json"
-fi
+# 4. Dynamic Profiles 現在由 stow 管理
+# 檔案位於: stow/iterm2/Library/Application Support/iTerm2/DynamicProfiles/dotfiles_profiles.json
+# 執行 `dotfile link` 即可建立 symlink
 
-echo "[iTerm2] Done. Please restart iTerm2 to apply changes."
+echo "[iTerm2] Done. Please run 'dotfile link' and restart iTerm2 to apply changes."
