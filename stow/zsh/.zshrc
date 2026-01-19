@@ -2,6 +2,12 @@
 #  ZSH RC - Entry Point
 # ==============================================================================
 
+# 防止重複載入 (VS Code Shell Integration 會觸發多次)
+if [[ -n "$__ZSHRC_LOADED" ]]; then
+  return 0
+fi
+export __ZSHRC_LOADED=1
+
 # 設定 Zsh Config 目錄
 export ZDOTDIR="$HOME/.config/zsh"
 
