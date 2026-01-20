@@ -5,7 +5,7 @@ command_timeout = 500
 add_newline = true
 
 format = """
-[➜](blue)$directory$git_branch$git_status$line_break$character
+[➜](blue)$directory$line_break$character
 """
 
 right_format = """$all"""
@@ -85,11 +85,13 @@ disabled = true
 
 
 [git_branch]
+disabled = true
 symbol = "[](black) "
 style = "fg:lavender bg:black"
 format = '  on [$symbol$branch]($style)[](black)'
 
 [git_status]
+disabled = true
 format = ' [($all_status$ahead_behind )]($style)'
 untracked = ""
 stashed = ""
