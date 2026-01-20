@@ -60,6 +60,7 @@ alias spoton='sudo mdutil -a -i on'
 # macOS Environment
 # ==============================
 export BROWSER="open"
+export GPG_TTY=$(tty)
 
 # Prefer GNU coreutils if installed
 if [[ -d "$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin" ]]; then
