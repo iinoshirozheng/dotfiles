@@ -29,16 +29,10 @@ case "$cmd" in
   update)
     echo "[Dotfile] Updating..."
     cd "$root"
-    if ! git diff-index --quiet HEAD --; then
-      echo "Stashing changes..."
-      git stash
-      STASHED=1
-    fi
+    echo "Discarding local changes..."
+    git checkout -- .
+    git clean -fd
     git pull --rebase
-    if [ "${STASHED:-0}" -eq 1 ]; then
-      echo "Restoring changes..."
-      git stash pop
-    fi
     "$0" link
     echo "Update complete!"
     ;;
