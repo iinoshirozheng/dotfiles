@@ -1,9 +1,0 @@
-[Unit]
-Description=My Custom Service
-
-[Service]
-ExecStart=/path/to/your/script.sh
-Restart=always
-
-[Install]
-WantedBy=multi-user.target

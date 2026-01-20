@@ -88,12 +88,12 @@ cmd="${1:-help}"
 case "$cmd" in
   link|restow)
     echo "[Dotfile] Linking configurations..."
-    (cd "$root/stow" && stow -t "$HOME" --restow zsh starship git eza nvim iterm2)
+    (cd "$root/stow" && stow -t "$HOME" --restow zsh starship git eza nvim iterm2 launchd systemd)
     link_os_overrides --restow
     ;;
   unlink)
     echo "[Dotfile] Unlinking configurations..."
-    (cd "$root/stow" && stow -t "$HOME" -D zsh starship git eza nvim iterm2)
+    (cd "$root/stow" && stow -t "$HOME" -D zsh starship git eza nvim iterm2 launchd systemd)
     link_os_overrides -D
     ;;
   update)
