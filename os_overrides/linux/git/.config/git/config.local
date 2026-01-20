@@ -1,0 +1,26 @@
+# Linux-specific Git configuration
+
+[credential]
+    # Use libsecret for credential storage (GNOME)
+    # helper = /usr/share/doc/git/contrib/credential/libsecret/git-credential-libsecret
+    # Or use git-credential-manager
+    # helper = /usr/bin/git-credential-manager
+    # Or use cache with timeout
+    helper = cache --timeout=3600
+
+[core]
+    # Use inotify-based file system monitor
+    fsmonitor = true
+    untrackedCache = true
+
+[diff]
+    tool = meld
+
+[merge]
+    tool = meld
+
+[difftool "meld"]
+    cmd = meld "$LOCAL" "$REMOTE"
+
+[mergetool "meld"]
+    cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"

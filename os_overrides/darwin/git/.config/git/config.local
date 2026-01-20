@@ -1,0 +1,23 @@
+# macOS-specific Git configuration
+
+[credential]
+    helper = osxkeychain
+
+[core]
+    # Use macOS native file system monitor
+    fsmonitor = true
+    untrackedCache = true
+
+[diff]
+    # Use opendiff (FileMerge) if available
+    tool = opendiff
+
+[merge]
+    tool = opendiff
+
+[difftool "opendiff"]
+    cmd = /usr/bin/opendiff "$LOCAL" "$REMOTE" -merge "$MERGED" | cat
+
+[gpg]
+    # Use GPG from Homebrew if available
+    program = /opt/homebrew/bin/gpg

@@ -16,15 +16,85 @@ USAGE
 
 root="${HOME}/dotfiles"
 
+# Detect OS type: darwin or linux
+detect_os() {
+  case "$(uname -s)" in
+    Darwin) echo "darwin" ;;
+    Linux)  echo "linux" ;;
+    *)      echo "unknown" ;;
+  esac
+}
+
+# Link OS-specific overrides using stow
+# Usage: link_os_overrides <action>
+#   action: --restow (link) or -D (unlink)
+# Note: Uses --no-folding to merge into existing directories managed by main stow packages
+link_os_overrides() {
+  local action="${1:---restow}"
+  local os_type
+  os_type="$(detect_os)"
+  
+  local override_dir="$root/os_overrides/$os_type"
+  
+  if [[ ! -d "$override_dir" ]]; then
+    echo "[Dotfile] No OS overrides found for $os_type"
+    return 0
+  fi
+  
+  echo "[Dotfile] Processing OS overrides for $os_type..."
+  
+  # Process each package individually with --no-folding
+  # This allows files to be added to directories already managed by main stow packages
+  for pkg_dir in "$override_dir"/*/; do
+    if [[ -d "$pkg_dir" ]]; then
+      local pkg_name
+      pkg_name="$(basename "$pkg_dir")"
+      echo "[Dotfile]   -> Override: $pkg_name"
+      
+      # Try stow first
+      if ! (cd "$override_dir" && stow -t "$HOME" --no-folding "$action" "$pkg_name" 2>/dev/null); then
+        # Fallback: manually link files for known problematic packages
+        if [[ "$pkg_name" == "zsh" ]]; then
+          echo "[Dotfile]   -> Using manual link fallback for zsh..."
+          local zsh_confd="$override_dir/zsh/.config/zsh/conf.d"
+          local target_confd="$HOME/.config/zsh/conf.d"
+          
+          if [[ -d "$zsh_confd" && -d "$target_confd" ]]; then
+            for file in "$zsh_confd"/*.zsh; do
+              if [[ -f "$file" ]]; then
+                local filename
+                filename="$(basename "$file")"
+                if [[ "$action" == "-D" ]]; then
+                  # Unlink
+                  rm -f "$target_confd/$filename"
+                  echo "[Dotfile]      Removed: $filename"
+                else
+                  # Link
+                  ln -sf "$file" "$target_confd/$filename"
+                  echo "[Dotfile]      Linked: $filename"
+                fi
+              fi
+            done
+          fi
+        else
+          echo "[Dotfile]   -> Warning: Failed to stow $pkg_name, skipping..."
+        fi
+      fi
+    fi
+  done
+}
+
 cmd="${1:-help}"
 case "$cmd" in
   link|restow)
     echo "[Dotfile] Linking configurations..."
     (cd "$root/stow" && stow -t "$HOME" --restow zsh starship git eza nvim iterm2)
+    link_os_overrides --restow
     ;;
   unlink)
     echo "[Dotfile] Unlinking configurations..."
     (cd "$root/stow" && stow -t "$HOME" -D zsh starship git eza nvim iterm2)
+    link_os_overrides -D
     ;;
   update)
     echo "[Dotfile] Updating..."
@@ -38,7 +108,8 @@ case "$cmd" in
     ;;
   install)
     OS="$(uname -s)"
-    echo "[Dotfile] Installing for $OS..."
+    os_type="$(detect_os)"
+    echo "[Dotfile] Installing for $OS ($os_type)..."
     
     # 1. Fonts (Common)
     if [ -f "$root/os/darwin/fonts/install.sh" ]; then
@@ -49,6 +120,12 @@ case "$cmd" in
         # macOS Specific
         echo "[Dotfile] Running brew bundle..."
         (cd "$root" && brew bundle --file=./Brewfile)
+        
+        # Install macOS-specific packages from os_overrides
+        if [ -f "$root/os_overrides/darwin/packages/Brewfile.local" ]; then
+            echo "[Dotfile] Installing macOS-specific packages..."
+            (cd "$root" && brew bundle --file=./os_overrides/darwin/packages/Brewfile.local)
+        fi
         
         echo "[Dotfile] Applying macOS defaults..."
         bash "$root/os/darwin/defaults/apply.sh"
@@ -61,6 +138,20 @@ case "$cmd" in
              echo "[Dotfile] Installing Apt packages..."
              xargs -a "$root/os/linux/apt.txt" sudo apt install -y
         fi
+        
+        # Install Linux-specific packages from os_overrides
+        local_pkg_dir="$root/os_overrides/linux/packages"
+        if command -v apt &>/dev/null && [ -f "$local_pkg_dir/apt.local.txt" ]; then
+            echo "[Dotfile] Installing Linux-specific APT packages..."
+            grep -v '^#' "$local_pkg_dir/apt.local.txt" | grep -v '^$' | xargs -r sudo apt install -y
+        elif command -v dnf &>/dev/null && [ -f "$local_pkg_dir/dnf.local.txt" ]; then
+            echo "[Dotfile] Installing Linux-specific DNF packages..."
+            grep -v '^#' "$local_pkg_dir/dnf.local.txt" | grep -v '^$' | xargs -r sudo dnf install -y
+        elif command -v pacman &>/dev/null && [ -f "$local_pkg_dir/pacman.local.txt" ]; then
+            echo "[Dotfile] Installing Linux-specific Pacman packages..."
+            grep -v '^#' "$local_pkg_dir/pacman.local.txt" | grep -v '^$' | xargs -r sudo pacman -S --noconfirm
+        fi
+        
         if [ -f "$root/os/linux/postinstall.sh" ]; then
              bash "$root/os/linux/postinstall.sh"
         fi

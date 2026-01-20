@@ -1,0 +1,44 @@
+# Linux-specific DNF packages (Fedora/RHEL)
+# Install with: xargs -a dnf.local.txt sudo dnf install -y
+
+# =================================
+# System utilities
+# =================================
+htop
+btop
+ncdu
+duf
+xclip
+xsel
+trash-cli
+
+# =================================
+# Development
+# =================================
+@development-tools
+cmake
+openssl-devel
+libffi-devel
+
+# =================================
+# Network tools
+# =================================
+net-tools
+nmap
+wireshark
+curl
+wget
+openssh-server
+
+# =================================
+# Fonts
+# =================================
+fira-code-fonts
+jetbrains-mono-fonts
+
+# =================================
+# GUI utilities (Desktop only)
+# =================================
+# meld
+# gnome-tweaks
+# dconf-editor

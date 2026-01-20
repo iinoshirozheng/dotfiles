@@ -1,0 +1,46 @@
+# Linux-specific APT packages (Debian/Ubuntu)
+# Install with: xargs -a apt.local.txt sudo apt install -y
+
+# =================================
+# System utilities
+# =================================
+htop
+btop
+ncdu
+duf
+xclip
+xsel
+trash-cli
+gparted
+
+# =================================
+# Development
+# =================================
+build-essential
+cmake
+pkg-config
+libssl-dev
+libffi-dev
+
+# =================================
+# Network tools
+# =================================
+net-tools
+nmap
+wireshark
+curl
+wget
+openssh-server
+
+# =================================
+# Fonts
+# =================================
+fonts-firacode
+fonts-jetbrains-mono
+
+# =================================
+# GUI utilities (Desktop only)
+# =================================
+# meld
+# gnome-tweaks
+# dconf-editor

@@ -1,0 +1,43 @@
+# Linux-specific Pacman packages (Arch Linux)
+# Install with: xargs -a pacman.local.txt sudo pacman -S --noconfirm
+
+# =================================
+# System utilities
+# =================================
+htop
+btop
+ncdu
+duf
+xclip
+xsel
+trash-cli
+
+# =================================
+# Development
+# =================================
+base-devel
+cmake
+openssl
+libffi
+
+# =================================
+# Network tools
+# =================================
+net-tools
+nmap
+wireshark-qt
+curl
+wget
+openssh
+
+# =================================
+# Fonts
+# =================================
+ttf-fira-code
+ttf-jetbrains-mono
+ttf-jetbrains-mono-nerd
+
+# =================================
+# GUI utilities (Desktop only)
+# =================================
+# meld
