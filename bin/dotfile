@@ -122,10 +122,10 @@ case "$cmd" in
         (cd "$root" && brew bundle --file=./Brewfile)
         
         # Install macOS-specific packages from os_overrides
-        if [ -f "$root/os_overrides/darwin/packages/Brewfile.local" ]; then
-            echo "[Dotfile] Installing macOS-specific packages..."
-            (cd "$root" && brew bundle --file=./os_overrides/darwin/packages/Brewfile.local)
-        fi
+        # if [ -f "$root/os_overrides/darwin/packages/Brewfile.local" ]; then
+        #     echo "[Dotfile] Installing macOS-specific packages..."
+        #     (cd "$root" && brew bundle --file=./os_overrides/darwin/packages/Brewfile.local)
+        # fi
         
         echo "[Dotfile] Applying macOS defaults..."
         bash "$root/os/darwin/defaults/apply.sh"
