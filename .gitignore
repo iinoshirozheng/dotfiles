@@ -27,3 +27,4 @@ stow/*/.DS_Store
 *.bak
 *.swp
 *~
+secrets/.gitconfig.local
