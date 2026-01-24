@@ -88,12 +88,33 @@ cmd="${1:-help}"
 case "$cmd" in
   link|restow)
     echo "[Dotfile] Linking configurations..."
-    (cd "$root/stow" && stow -t "$HOME" --restow zsh starship git eza nvim iterm2 launchd systemd agent)
+    stow_pkgs=()
+    for d in "$root/stow"/*/; do
+      if [[ -d "$d" ]]; then
+        stow_pkgs+=("$(basename "$d")")
+      fi
+    done
+    
+    if [[ ${#stow_pkgs[@]} -gt 0 ]]; then
+      echo "[Dotfile] Stowing packages: ${stow_pkgs[*]}"
+      (cd "$root/stow" && stow -t "$HOME" --restow "${stow_pkgs[@]}")
+    else
+      echo "[Dotfile] No stow packages found."
+    fi
     link_os_overrides --restow
     ;;
   unlink)
     echo "[Dotfile] Unlinking configurations..."
-    (cd "$root/stow" && stow -t "$HOME" -D zsh starship git eza nvim iterm2 launchd systemd agent)
+    stow_pkgs=()
+    for d in "$root/stow"/*/; do
+      if [[ -d "$d" ]]; then
+        stow_pkgs+=("$(basename "$d")")
+      fi
+    done
+
+    if [[ ${#stow_pkgs[@]} -gt 0 ]]; then
+      (cd "$root/stow" && stow -t "$HOME" -D "${stow_pkgs[@]}")
+    fi
     link_os_overrides -D
     ;;
   update)
