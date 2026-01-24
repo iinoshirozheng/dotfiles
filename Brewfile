@@ -66,8 +66,6 @@ cask "monitorcontrol"         # External monitor brightness
 cask "qlcolorcode"            # Syntax highlighting in Quick Look
 cask "qlstephen"              # Plain text files without extension
 cask "qlmarkdown"             # Markdown preview
-cask "quicklook-json"         # JSON preview
-cask "qlimagesize"            # Image dimensions in Quick Look
 
 # --- Fonts (Casks) ---
 cask "font-jetbrains-mono-nerd-font"

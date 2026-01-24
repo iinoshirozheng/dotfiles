@@ -29,7 +29,8 @@ main() {
     fi
   fi
 
-  ./install.sh "$OS"
+  DOTFILES_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  "$DOTFILES_ROOT/install.sh" "$OS"
 }
 
 main "$@"
