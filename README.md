@@ -49,6 +49,7 @@ make
 | `dotfile link` | 重新連結設定檔 (使用 Stow) |
 | `dotfile update` | 安全更新專案 (Git Pull + Re-stow) |
 | `dotfile test` | 執行測試 |
+| `skills install` | 安裝並連結新的 AI Agent 技能 |
 
 ### Neovim
 

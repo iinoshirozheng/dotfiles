@@ -1,0 +1,128 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# bin/skills - A helper to install and link skills
+
+DOTFILES_ROOT="${HOME}/dotfiles"
+
+usage() {
+    cat <<USAGE
+Skills Manager
+
+Usage:
+  skills install|add <source>  # 安裝新技能並連結 (npx skills add)
+  skills uninstall|rm <name>   # 移除技能並更新連結 (npx skills remove)
+  skills list|ls               # 列出已安裝技能
+  skills help|-h|--help        # 顯示此說明
+
+Example:
+  skills add vercel-labs/agent-skills
+  skills rm agent-skills
+  skills list
+USAGE
+}
+
+if [[ $# -lt 1 ]]; then
+    usage
+    exit 1
+fi
+
+cmd="$1"
+shift
+
+case "$cmd" in
+    help|-h|--help)
+        usage
+        exit 0
+        ;;
+    install|add)
+        if [[ $# -lt 1 ]]; then
+            usage
+            exit 1
+        fi
+        
+        # 1. Install to agent/ directory
+        echo "[Skills] Installing skill(s)..."
+        cd "$DOTFILES_ROOT/agent"
+        # We pass -y for non-interactive and redirect all arguments
+        # We specify --agent '*' to avoid the prompt, our manage-links.sh will handle the actual linking
+        npx -y skills add "$@" -y --agent "*"
+        
+        # 1.5 Extract skills from pollution and cleanup
+        echo "[Skills] Extracting skills from agent pollution..."
+        find "$DOTFILES_ROOT/agent" -name "SKILL.md" | grep "/\." | while read -r skill_md; do
+            skill_dir=$(dirname "$skill_md")
+            if [[ "$skill_dir" != *"/agent/skills/"* ]]; then
+                skill_name=$(basename "$skill_dir")
+                echo "  -> Moving $skill_name to skills/"
+                # Remove existing if any to avoid mv error
+                rm -rf "$DOTFILES_ROOT/agent/skills/$skill_name"
+                mv "$skill_dir" "$DOTFILES_ROOT/agent/skills/"
+            fi
+        done
+
+        echo "[Skills] Cleaning up agent pollution..."
+        find "$DOTFILES_ROOT/agent" -maxdepth 1 -name ".*" -not -name "." -not -name ".." -not -name ".system" -exec rm -rf {} +
+        
+        # 2. Run manage-links.sh
+        echo "[Skills] Updating shared links..."
+        bash "./manage-links.sh"
+        
+        # 3. Run dotfile link
+        echo "[Skills] Stowing to system..."
+        "$DOTFILES_ROOT/bin/dotfile" link
+        
+        echo "[Skills] Successfully installed and linked!"
+        ;;
+    uninstall|remove|rm)
+        if [[ $# -lt 1 ]]; then
+            usage
+            exit 1
+        fi
+        
+        # 1. Remove from agent/ directory
+        echo "[Skills] Uninstalling skill(s)..."
+        cd "$DOTFILES_ROOT/agent"
+        # Pass -y to skip confirmation
+        npx -y skills remove "$@" -y
+        
+        # 1.5 Extract skills from pollution and cleanup
+        echo "[Skills] Extracting skills from agent pollution..."
+        find "$DOTFILES_ROOT/agent" -name "SKILL.md" | grep "/\." | while read -r skill_md; do
+            skill_dir=$(dirname "$skill_md")
+            if [[ "$skill_dir" != *"/agent/skills/"* ]]; then
+                skill_name=$(basename "$skill_dir")
+                echo "  -> Moving $skill_name to skills/"
+                # Remove existing if any to avoid mv error
+                rm -rf "$DOTFILES_ROOT/agent/skills/$skill_name"
+                mv "$skill_dir" "$DOTFILES_ROOT/agent/skills/"
+            fi
+        done
+
+        echo "[Skills] Cleaning up agent pollution..."
+        find "$DOTFILES_ROOT/agent" -maxdepth 1 -name ".*" -not -name "." -not -name ".." -not -name ".system" -exec rm -rf {} +
+        
+        # 2. Run manage-links.sh
+        echo "[Skills] Updating shared links..."
+        bash "./manage-links.sh"
+        
+        # 3. Run dotfile link
+        echo "[Skills] Updating system links..."
+        "$DOTFILES_ROOT/bin/dotfile" link
+        
+        echo "[Skills] Successfully uninstalled and updated links!"
+        ;;
+    list|ls)
+        if [[ $# -eq 0 && -d "$DOTFILES_ROOT/agent/skills" ]]; then
+            echo "[Skills] Local skills in agent/skills/:"
+            ls -1 "$DOTFILES_ROOT/agent/skills" | sed 's/^/  - /'
+        else
+            cd "$DOTFILES_ROOT/agent"
+            npx -y skills list "$@"
+        fi
+        ;;
+    *)
+        usage
+        exit 1
+        ;;
+esac
