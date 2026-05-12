@@ -14,4 +14,4 @@ if ! command -v git &> /dev/null; then
   exit 1
 fi
 
-echo "[Test] All tests passed."
+echo "[Test] All tests passed.123123"
