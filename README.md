@@ -19,6 +19,7 @@
     *   **Telescope** & **Neo-tree**。
 *   **Git 優化**: 整合 **Delta** 讓 diff 變得美觀易讀，並預設常用 Alias (`st`, `lg`, `co`...)。
 *   **套件管理**: 整合 **Homebrew**, **Pixi**, **Uv**。
+*   **AI Agent skills**: `agent/skills/` 收納並持續擴充可安裝的開發技能。
 
 ## 📂 結構
 
@@ -27,13 +28,14 @@
 - `Brewfile`: macOS 套件清單 (包含 Cask & Fonts)。
 - `stow/`: 設定檔來源 (Zsh, Git, Neovim, Starship...)。
 - `os/`: OS 專屬設定腳本。
+- `agent/skills/`: AI Agent skills 與其參考資料。
 
 ## 🚀 快速開始
 
 ### 首次安裝
 
 ```bash
-git clone https://github.com/yourusername/dotfiles.git ~/dotfiles
+git clone https://github.com/iinoshirozheng/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 make
 # 或者手動執行: ./bootstrap.sh
